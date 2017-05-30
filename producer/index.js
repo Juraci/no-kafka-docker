@@ -7,19 +7,22 @@ const producer = new Kafka.Producer({
 });
 
 let count = 0;
-return producer.init().then(function(){
-  count++;
-  return producer.send({
+
+setInterval(() => {
+  return producer.init().then(function(){
+    count++;
+    return producer.send({
       topic: 'darksouls',
       partition: 0,
       message: {
         value: `Hello ${count}`
       }
-  });
-})
-.then(function (result) {
-  console.log('>>> producer sent message');
-  /*
+    });
+  })
+    .then(function (result) {
+      console.log('>>> producer sent message');
+      /*
   [ { topic: 'kafka-test-topic', partition: 0, offset: 353 } ]
   */
-});
+    });
+}, 1000)
